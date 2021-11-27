@@ -1,0 +1,8 @@
+{
+  "name": "Control Center",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular",
+  "id": "d635df8f"
+}
