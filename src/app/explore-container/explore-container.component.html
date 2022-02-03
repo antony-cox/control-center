@@ -1,4 +1,28 @@
 <div id="container">
-  <strong>{{ name }}</strong>
-  <p>Explore <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
+  <ion-chip *ngIf="diskInfo == null" color="warning">
+    <ion-label>Command center not available.</ion-label>
+  </ion-chip>
+
+  
+
+  <ion-card *ngFor="let d of diskInfo;let i = index">
+    <ion-card-header>
+      <ion-card-title>{{ d.letter + ' ' + d.name }}</ion-card-title>
+    </ion-card-header>
+  
+    <ion-card-content>
+      <div style="height:75px; width:75px; margin: 0 auto; margin-bottom: 10px;">
+        <canvas id="disk{{i}}"></canvas>
+      </div>
+      {{ d.size - d.freeSpace }} / {{ d.size }} GB  ({{ ((d.size - d.freeSpace) / d.size) | percent}})
+    </ion-card-content>
+  </ion-card>
+
+  <ion-button color="success" expand="block" (click)="refresh()">
+    <ion-icon name="refresh" style="padding-right: 5px"></ion-icon>Refresh
+  </ion-button>
+
+  <ion-button color="danger" expand="block" (click)="shutdown()" [disabled]="diskInfo == null">
+    <ion-icon name="power" style="padding-right: 5px"></ion-icon>Shutdown
+  </ion-button>
 </div>

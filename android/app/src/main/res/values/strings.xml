@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Control Center</string>
+    <string name="title_activity_main">Control Center</string>
+    <string name="package_name">com.cox.controlcenter</string>
+    <string name="custom_url_scheme">com.cox.controlcenter</string>
+</resources>
