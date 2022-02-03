@@ -1,5 +1,5 @@
-import { Component, OnInit, Input, ViewChild, ElementRef, AfterViewChecked } from '@angular/core';
-import { AlertController, ToastController } from '@ionic/angular';
+import { Component, OnInit, Input, AfterViewChecked } from '@angular/core';
+import { AlertController, ToastController, LoadingController } from '@ionic/angular';
 import { ApiService } from '../services/api-service.service';
 import { Chart, DoughnutController, ArcElement } from 'chart.js';
 
@@ -11,25 +11,38 @@ import { Chart, DoughnutController, ArcElement } from 'chart.js';
 export class ExploreContainerComponent implements OnInit, AfterViewChecked {
   @Input() name: string;
   diskInfo = null;
+  loading;
 
   constructor(
     private api: ApiService,
     private alertController: AlertController,
-    private toastController: ToastController) 
+    private toastController: ToastController,
+    private loadingController: LoadingController) 
   {}
 
-  ngOnInit()
+  async ngOnInit()
   {
+    await this.presentLoading();
     Chart.register(DoughnutController, ArcElement)    
 
     this.api.getControlCenterInfo().subscribe(result => {
       if(result != null && result != undefined)
       {
         this.diskInfo = result;
+        this.loading.dismiss();
       }
     }, err => {
       this.onError(err);
     });
+  }
+
+  async presentLoading() {
+    this.loading = await this.loadingController.create({
+      spinner: 'crescent',
+      message: 'Loading ...'
+    });
+
+    await this.loading.present();
   }
 
   ngAfterViewChecked()
@@ -71,10 +84,12 @@ export class ExploreContainerComponent implements OnInit, AfterViewChecked {
 
   refresh()
   {
+    this.presentLoading();
     this.api.getControlCenterInfo().subscribe(result => {
       if(result != null && result != undefined)
       {
         this.diskInfo = result;
+        this.loading.dismiss();
       }
     }, err => {
       this.onError(err);
