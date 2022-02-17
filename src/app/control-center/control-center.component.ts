@@ -4,11 +4,11 @@ import { ApiService } from '../services/api-service.service';
 import { Chart, DoughnutController, ArcElement } from 'chart.js';
 
 @Component({
-  selector: 'app-explore-container',
-  templateUrl: './explore-container.component.html',
-  styleUrls: ['./explore-container.component.scss'],
+  selector: 'app-control-center',
+  templateUrl: './control-center.component.html',
+  styleUrls: ['./control-center.component.scss'],
 })
-export class ExploreContainerComponent implements OnInit, AfterViewChecked {
+export class ControlCenterComponent implements OnInit, AfterViewChecked {
   @Input() name: string;
   diskInfo = null;
   loading;
